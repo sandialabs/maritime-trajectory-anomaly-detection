@@ -22,7 +22,7 @@ algorithms that work well on real data and can be reproduced and validated
 ## Installation
 
 > [!IMPORTANT]
-> Note that Python 3.9 or higher is required for this package.
+> Note that Python 3.10 or higher is required for this package.
 
 We recommend creating a virtual environment before installation and usage.
 
