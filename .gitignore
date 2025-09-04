@@ -1,0 +1,15 @@
+push.sh
+*.csv
+*.zip
+*.tar.gz
+__pycache__
+.DS_Store
+*.pyc
+maritime_benchmark_env
+.venv
+cleanup.sh
+data/*.csv
+*.egg-info
+.ipynb_checkpoints
+.hidden
+

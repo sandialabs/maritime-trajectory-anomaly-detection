@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maritime-trajectory-anomaly-detection"
+version = "1.0.0"
+dependencies = [
+  "numpy",
+  "pandas",
+  "matplotlib",
+  "plotly",
+  "scikit-learn",
+  "geopandas",
+  "python-dateutil",
+  "requests",
+  "black",
+  "pytest",
+  "pytest-mock",
+]
+requires-python = ">= 3.10"
+
+[project.scripts]
+maritime-anomaly = "src.main:main"
+
+[tool.setuptools.packages.find]
+include = ["src"]
+
