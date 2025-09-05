@@ -139,7 +139,7 @@ Maisy Dunlavy (ORCID: [0009-0009-6007-2325](https://orcid.org/0009-0009-6007-232
 - Amelia Henriksen (ORCID: [0000-0001-5042-8417](https://orcid.org/0000-0001-5042-8417))
 - Miranda Mundt (ORCID: [0000-0002-5283-2138](https://orcid.org/0000-0002-5283-2138))
 - Elizabeth Newman (ORCID: [0000-0002-6309-7706](https://orcid.org/0000-0002-6309-7706))
-- Chelsea Drum
+- Chelsea Drum (ORCID: [0009-0009-7087-1569](https://orcid.org/0009-0009-7087-1569))
 
 ### Funding
 
