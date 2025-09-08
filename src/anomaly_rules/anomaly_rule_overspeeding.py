@@ -12,7 +12,7 @@ import numpy as np
 
 
 def overspeeding(params, filtered_data):
-    percentile = 0.98  # default
+    percentile = 0.99  # default
 
     if params["percentile"] is not None:
         percentile = params["percentile"]
@@ -24,26 +24,44 @@ def overspeeding(params, filtered_data):
         )
     ).dropna(subset=["comput_speed_knots"])
 
-    speed_threshold = compute_speed_threshold(filtered_data, percentile)
+    additionally_filtered_data = apply_additional_overspeed_filters(filtered_data)
 
-    filtered_data["overspeed_flag"] = (
-        filtered_data["computed_speed_knots"] > speed_threshold
+    speed_threshold, filtered_data = compute_speed_threshold(
+        additionally_filtered_data, percentile
+    )
+
+    additionally_filtered_data["overspeed_flag"] = (
+        additionally_filtered_data["computed_speed_knots"] > speed_threshold
     )
 
     print(
-        f"DEBUG All Data:\n{filtered_data[['datetime_utc', 'comput_speed_knots', 'overspeed_flag']]}\n"
+        f"DEBUG All Filtered Data:\n{additionally_filtered_data[['datetime_utc', 'comput_speed_knots', 'overspeed_flag']]}\n"
     )
 
     print(
-        f"DEBUG Flagged:\n{filtered_data[filtered_data['overspeed_flag']][['datetime_utc', 'computed_speed_knots', 'overspeed_flag']]}\n"
+        f"DEBUG Flagged Data:\n{additionally_filtered_data[additionally_filtered_data['overspeed_flag']][['datetime_utc', 'computed_speed_knots', 'overspeed_flag']]}\n"
     )
 
-    return filtered_data
+    return additionally_filtered_data
 
 
-def compute_speed_threshold(filtered_ais_data, percentile=0.98):
+def apply_additional_overspeed_filters(filtered_ais_data):
+    # Remove stopped or moored data points where status code is 1 OR 5 AND the computed speed < 0.1 knots
+    mask_status = ~(
+        (
+            (filtered_ais_data["status"].isin([1, 5]))
+            & (filtered_ais_data["computed_speed_knots"] < 0.1)
+        )
+    )
+    mask_speed = filtered_ais_data["computed_speed_knots"] <= 65
+    newly_filtered_data = filtered_ais_data[mask_status & mask_speed]
+
+    return newly_filtered_data
+
+
+def compute_speed_threshold(filtered_ais_data, percentile):
     valid_speeds = (
-        filtered_ais_data["speed_over_ground_knots"]
+        filtered_ais_data["computed_speed_knots"]
         .replace([np.inf, -np.inf], np.nan)
         .dropna()
     )
@@ -52,4 +70,4 @@ def compute_speed_threshold(filtered_ais_data, percentile=0.98):
 
     print(f"Speed threshold successfully generated: {speed_threshold} knots\n")
 
-    return speed_threshold
+    return speed_threshold, valid_speeds

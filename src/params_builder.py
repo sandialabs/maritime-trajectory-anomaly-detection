@@ -132,7 +132,7 @@ class ArgParser:
         self.parser.add_argument(
             "--percentile",
             type=float,
-            help="Speed percentile value (between 0 and 1). Default is 0.98.",
+            help="Speed percentile value (between 0 and 1). Default is 0.99.",
         )
 
         self.parser.add_argument(

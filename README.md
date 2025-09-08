@@ -106,7 +106,7 @@ the prompts.
                         Vessel classes (multiple allowed).
   --length LENGTH       Length range in the format min-max, e.g., 50-100.
   --percentile PERCENTILE
-                        Speed percentile value (between 0 and 1). Default is 0.98.
+                        Speed percentile value (between 0 and 1). Default is 0.99.
   --date_start DATE_START
                         Start date in YYYY-MM-DD format.
   --date_end DATE_END   End date in YYYY-MM-DD format.
