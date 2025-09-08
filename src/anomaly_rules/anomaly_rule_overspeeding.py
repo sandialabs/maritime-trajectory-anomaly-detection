@@ -46,13 +46,18 @@ def overspeeding(params, filtered_data):
 
 
 def apply_additional_overspeed_filters(filtered_ais_data):
-    # Remove stopped or moored data points where status code is 1 OR 5 AND the computed speed < 0.1 knots
+    # Remove stopped or moored data points where status code is 1 OR 5
+    # AND the computed speed < 0.1 knots
     mask_status = ~(
         (
             (filtered_ais_data["status"].isin([1, 5]))
             & (filtered_ais_data["computed_speed_knots"] < 0.1)
         )
     )
+    # The world's fastest ship can go 58 knots, per:
+    # https://maritimepage.com/what-is-the-fastest-ship-in-the-world/
+    # We're being safe and adding a bit more to that, which is how
+    # we get to 65 knots as the "outlier" threshold
     mask_speed = filtered_ais_data["computed_speed_knots"] <= 65
     newly_filtered_data = filtered_ais_data[mask_status & mask_speed]
 
